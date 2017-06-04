@@ -1,0 +1,94 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>Drum Stick</title>
+  <style>
+    body {
+      background: #333;
+      color: #fff;
+    }
+    
+    .keys-container {
+      display: flex;
+      justify-content: space-around;
+      padding: 30px;
+    }
+    
+    .key {
+      border: 3px solid #fff;
+      padding: 20px;
+      transition: all .4s;
+    }
+    
+    .key-highlight {
+      transform: scale(1.2);
+      border-color: yellow;
+      color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="keys-container">
+    <div data-key="65" class="key">
+      A
+    </div>
+    <div data-key="83" class="key">
+      S
+    </div>
+    <div data-key="68" class="key">
+      D
+    </div>
+    <div data-key="70" class="key">
+      F
+    </div>
+    <div data-key="90" class="key">
+      Z
+    </div>
+    <div data-key="88" class="key">
+      X
+    </div>
+    <div data-key="67" class="key">
+      C
+    </div>
+    <div data-key="81" class="key">
+      Q
+    </div>
+    <div data-key="87" class="key">
+      W
+    </div>
+
+    <audio data-key="65" src="sounds/boom.wav"></audio>
+    <audio data-key="83" src="sounds/clap.wav"></audio>
+    <audio data-key="68" src="sounds/hihat.wav"></audio>
+    <audio data-key="70" src="sounds/kick.wav"></audio>
+    <audio data-key="90" src="sounds/openhat.wav"></audio>
+    <audio data-key="88" src="sounds/ride.wav"></audio>
+    <audio data-key="67" src="sounds/snare.wav"></audio>
+    <audio data-key="81" src="sounds/tink.wav"></audio>
+    <audio data-key="87" src="sounds/tom.wav"></audio>
+  </div>
+
+  <script>
+    function playAudio(event) {
+      let key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+      let audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+      if (key === null) return;
+      audio.currentTime = 0;
+      audio.play();
+      key.classList.add('key-highlight');
+    }
+
+    function removeTransition(event) {
+      if (event.propertyName !== 'transform') return;
+      this.classList.remove('key-highlight');
+    }
+
+    window.addEventListener('keydown', playAudio);
+    let keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  </script>
+</body>
+
+</html>
