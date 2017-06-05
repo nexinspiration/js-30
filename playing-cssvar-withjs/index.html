@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Playing CSS Variable with js</title>
+  <style>
+     :root {
+      --spacing: 20px;
+      --box-color: #333;
+    }
+    
+    .box {
+      padding: var(--spacing);
+      width: 50px;
+      height: 50px;
+      background: var(--box-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="controls">
+    <div>
+      Spacing : <input type="range" min="20" max="100" data-type="px" name="spacing">
+    </div>
+    <div>
+      Color : <input type="color" name="box-color">
+    </div>
+  </div>
+  <div class="box"></div>
+</body>
+
+<script>
+  function handleUpdate() {
+    const suffix = this.dataset.type || '';
+    document.documentElement.style.setProperty(`--${this.name}`, `${this.value}${suffix}`)
+  }
+
+  document.querySelectorAll('input').forEach((input) => {
+    input.addEventListener('change', handleUpdate);
+  });
+</script>
+
+</html>
